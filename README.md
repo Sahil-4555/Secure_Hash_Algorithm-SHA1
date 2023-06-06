@@ -5,6 +5,7 @@ Hash Encryption is a Go package that implements a secure hash algorithm for encr
 ## Features
 
 - Generates a 160-bit message digest for input data.
+- Generates 40 digits hexadecimal code of password
 - Implements a secure hash algorithm for encryption.
 - Supports encryption of various data types.
 
