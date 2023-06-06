@@ -1,4 +1,4 @@
-module github.com/sahil/sha-1
+module github.com/Sahil-4555/Secure_Hash_Algorithm-SHA1
 
 go 1.20
 
