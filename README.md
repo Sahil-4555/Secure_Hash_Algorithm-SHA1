@@ -10,6 +10,14 @@ Hash Encryption is a Go package that implements a secure hash algorithm for encr
 
 ![SHA-1_state_model](https://user-images.githubusercontent.com/62175306/94359128-d14be700-00c2-11eb-9e9d-8dc78d1fb41a.png)
 
+## Functionality
+Hash Encryption provides the following functionality:
+
+ - Encryption of messages, passwords, or any other sensitive data
+ - Support for popular hash encryption algorithms such as MD5, SHA-1, SHA-256, etc.
+ - Customizable options for adjusting encryption parameters
+ - Protection against unauthorized access and data tampering
+
 ## Installation
 
 To use Hash Encryption in your Go project, you need to have Go programming language installed. Then, follow these steps:
