@@ -9,10 +9,11 @@ import (
 
 // The leftRotate function performs a left rotation operation on the given slice A by n positions.
 func leftRotate(A []int, n int) []int {
-	temp := make([]int, len(A))
-	copy(temp, A[n:])
-	copy(temp[len(A)-n:], A[:n])
-	return temp
+	// temp := make([]int, len(A))
+	// copy(temp, A[n:])
+	// copy(temp[len(A)-n:], A[:n])
+	// return temp
+	return append(A[n:], A[:n]...)
 }
 
 // The xorOfFour function performs the XOR operation on four input slices A, B, C, and D element-wise.
@@ -28,11 +29,7 @@ func xorOfFour(A, B, C, D []int) []int {
 func andOp(A, B []int) []int {
 	temp := make([]int, len(A))
 	for i := 0; i < len(A); i++ {
-		if A[i] == 1 && B[i] == 1 {
-			temp[i] = 1
-		} else {
-			temp[i] = 0
-		}
+		temp[i] = A[i] & B[i]
 	}
 	return temp
 }
@@ -41,11 +38,7 @@ func andOp(A, B []int) []int {
 func orOfThree(A, B, C []int) []int {
 	temp := make([]int, len(A))
 	for i := 0; i < len(A); i++ {
-		if A[i] == 0 && B[i] == 0 && C[i] == 0 {
-			temp[i] = 0
-		} else {
-			temp[i] = 1
-		}
+		temp[i] = A[i] | B[i] | C[i]
 	}
 	return temp
 }
@@ -54,7 +47,7 @@ func orOfThree(A, B, C []int) []int {
 func notOp(A []int) []int {
 	temp := make([]int, len(A))
 	for i := 0; i < len(A); i++ {
-		temp[i] = (A[i] + 1) % 2
+		temp[i] = 1 - A[i]
 	}
 	return temp
 }
@@ -65,13 +58,8 @@ func addTwo(A, B []int) []int {
 	carry := 0
 	for i := len(A) - 1; i >= 0; i-- {
 		sum := carry + A[i] + B[i]
-		if sum%2 == 0 {
-			temp[i] = 0
-			carry = sum / 2
-		} else {
-			temp[i] = 1
-			carry = (sum - 1) / 2
-		}
+		temp[i] = sum % 2
+		carry = sum / 2
 	}
 	return temp
 }
@@ -82,13 +70,8 @@ func addFive(A, B, C, D, E []int) []int {
 	carry := 0
 	for i := len(A) - 1; i >= 0; i-- {
 		sum := carry + A[i] + B[i] + C[i] + D[i] + E[i]
-		if sum%2 == 0 {
-			temp[i] = 0
-			carry = sum / 2
-		} else {
-			temp[i] = 1
-			carry = (sum - 1) / 2
-		}
+		temp[i] = sum % 2
+		carry = sum / 2
 	}
 	return temp
 }
@@ -98,21 +81,22 @@ func getDigest(A []int) string {
 	s := ""
 	for i := 0; i < 160; i += 4 {
 		an := A[i]*8 + A[i+1]*4 + A[i+2]*2 + A[i+3]
-		if an <= 9 {
-			s += strconv.Itoa(an)
-		} else if an == 10 {
-			s += "a"
-		} else if an == 11 {
-			s += "b"
-		} else if an == 12 {
-			s += "c"
-		} else if an == 13 {
-			s += "d"
-		} else if an == 14 {
-			s += "e"
-		} else {
-			s += "f"
-		}
+		// if an <= 9 {
+		// 	s += strconv.Itoa(an)
+		// } else if an == 10 {
+		// 	s += "a"
+		// } else if an == 11 {
+		// 	s += "b"
+		// } else if an == 12 {
+		// 	s += "c"
+		// } else if an == 13 {
+		// 	s += "d"
+		// } else if an == 14 {
+		// 	s += "e"
+		// } else {
+		// 	s += "f"
+		// }
+		s += strconv.FormatInt(int64(an), 16)
 	}
 	return s
 }
@@ -259,5 +243,6 @@ func main() {
 		os.Exit(1)
 	}
 
-	fmt.Println(Hash(input))
+	// Output the digest
+	fmt.Println("Digest (SHA-1):", Hash(input))
 }
