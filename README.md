@@ -18,6 +18,15 @@ Hash Encryption provides the following functionality:
  - Support for popular hash encryption algorithms such as MD5, SHA-1, SHA-256, etc.
  - Customizable options for adjusting encryption parameters
  - Protection against unauthorized access and data tampering
+ 
+## Go Implementation
+
+Run The `main.go` file Using Command:
+```
+go run main.go
+````
+### Output
+![SHA1_GO_IMPLEMENTATION](https://github.com/Sahil-4555/Secure_Hash_Algorithm-SHA1/blob/master/assets/sha1-go.png)
 
 ## Installation
 
