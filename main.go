@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
 	"os"
 	"strconv"
@@ -103,40 +104,64 @@ func getDigest(A []int) string {
 
 // This function takes an input slice of integers (inputArray), which represents the input message, and performs various operations to prepare the message for hashing.
 func Encrypt(inputArray []int) []int {
+
+	// Convert the all string into binary
 	length := len(inputArray)
 	messageBit := []int{}
+
+	// convert the char to binary
 	for i := 0; i < length; i++ {
 		a := inputArray[i]
 		anss := []int{}
+		// Convert the character to binary representation
 		for a != 0 {
 			h := a % 2
 			anss = append(anss, h)
 			a = a / 2
 		}
-		for j := 0; j < 8-len(anss); j++ {
+
+		// Append leading zeros until the binary representation becomes 8 bits
+		tmp := len(anss)
+		for j := 0; j < 8-tmp; j++ {
 			anss = append(anss, 0)
 		}
 		reverse(anss)
+
+		// Append the binary representation of the character to the message bits
 		for j := 0; j < 8; j++ {
 			messageBit = append(messageBit, anss[j])
 		}
 	}
+
+	// Append a '1' to the message bits
 	messageBit = append(messageBit, 1)
+
+	// Append zeros until the length of message bits is a multiple of 512 and has a remainder of 448
 	for len(messageBit)%512 != 448 {
 		messageBit = append(messageBit, 0)
 	}
+
+	// Calculate the length of the original message in bits
 	length = length * 8
+
+	// Create a slice of size 64 to store the length of the message in binary representation
 	ml := make([]int, 64)
 	p := 63
+
+	// Convert the length to binary representation
 	for length != 0 {
 		h := length % 2
 		ml[p] = h
 		length = length / 2
 		p = p - 1
 	}
+
+	// Append the binary representation of the length to the message bits
 	for j := 0; j < 64; j++ {
 		messageBit = append(messageBit, ml[j])
 	}
+
+	// Return the prepared message bits
 	return messageBit
 }
 
@@ -149,7 +174,10 @@ func reverse(arr []int) {
 
 // This is the main hash function. It takes a string input inp, converts it to an array of ASCII values (inpBytes), and performs the SHA-1 hashing algorithm on the input message.
 func Hash(inp string) string {
+
+	// converts the individual char of string to its ascii value
 	message := []rune(inp)
+
 	inpBytes := make([]int, len(message))
 
 	for i, c := range message {
@@ -234,10 +262,14 @@ func Hash(inp string) string {
 // The main function handles user input and calls the Hash function to compute the SHA-1 hash of the input message.
 func main() {
 
+	// taking input string.
 	var input string
 	fmt.Println("Enter Input: ")
-	fmt.Scanln(&input)
+	scanner := bufio.NewScanner(os.Stdin)
+	scanner.Scan()
+	input = scanner.Text()
 
+	// if input is empty.
 	if strings.TrimSpace(input) == "" {
 		fmt.Println("Please Enter Input.")
 		os.Exit(1)
